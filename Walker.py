@@ -1,24 +1,25 @@
 import random
 class Walker: 
     
-    def __init__(self,x,y,color,limitX,limitY):#x,y and color
+    def __init__(self,x,y,paintColor,pixelColor,limitX,limitY):#x,y and color
         self.x = x 
         self.y = y 
-        self.color = color
+        self.paintColor = paintColor
+        self.pixelColor = pixelColor
         self.limitX = limitX
         self.limitY = limitY
 
     # Draws self shape to a given context
     def draw(self,img,old):
         if(old == 1):
-            img[self.y,self.x][0] = self.color[0]
-            img[self.y,self.x][1] = self.color[1]
-            img[self.y,self.x][2] = self.color[2]
+            img[self.y,self.x][0] = self.paintColor[0]
+            img[self.y,self.x][1] = self.paintColor[1]
+            img[self.y,self.x][2] = self.paintColor[2]
+            
         else:
-            img[self.y,self.x][0] = 255 - self.color[0] 
-            img[self.y,self.x][1] = 255 - self.color[1]
-            img[self.y,self.x][2] = 255 - self.color[2]
-
+            img[self.y,self.x][0] = 255 - self.paintColor[0] 
+            img[self.y,self.x][1] = 255 - self.paintColor[1]
+            img[self.y,self.x][2] = 255 - self.paintColor[2]
 
     def walk(self,img):
         similaritys =[0] * 8
@@ -43,7 +44,8 @@ class Walker:
         return self
 
     def similarity(self,pixel):
-        value = 100//(abs((pixel[0] - self.color[0])) + abs((pixel[1] - self.color[1])) + abs((pixel[2] - self.color[2])))
+        #value = 255//(1+abs(self.pixelColor-pixel))
+        value = 1000//(1+(abs((pixel[0] - self.pixelColor[0])) + abs((pixel[1] - self.pixelColor[1])) + abs((pixel[2] - self.pixelColor[2]))))
         return value
 
     def setRelativePosition(self,x,y):
@@ -66,41 +68,41 @@ class Walker:
         if self.x + 1 < self.limitX:    
             neightboors.append(img[self.y,self.x+1])
         else:
-            neightboors.append([255-self.color[0],255-self.color[1],255-self.color[2]])
-        if self.x - 1 > self.limitX:
+            neightboors.append([255-self.pixelColor[0],255-self.pixelColor[1],255-self.pixelColor[2]])
+        if self.x - 1 > 0:
             neightboors.append(img[self.y,self.x-1])
         else:
-            neightboors.append([255-self.color[0],255-self.color[1],255-self.color[2]])
+            neightboors.append([255-self.pixelColor,255-self.pixelColor[1],255-self.pixelColor[2]])
 
         if self.y + 1 < self.limitY:    
             neightboors.append(img[self.y+1,self.x])
         else:
-            neightboors.append([255-self.color[0],255-self.color[1],255-self.color[2]])
+            neightboors.append([255-self.pixelColor[0],255-self.pixelColor[1],255-self.pixelColor[2]])
 
-        if self.y - 1 > self.limitY:    
+        if self.y - 1 > 0:    
             neightboors.append(img[self.y-1,self.x])
         else:
-            neightboors.append([255-self.color[0],255-self.color[1],255-self.color[2]])
+            neightboors.append([255-self.pixelColor[0],255-self.pixelColor[1],255-self.pixelColor[2]])
 
         if self.y + 1 < self.limitY and self.x + 1 < self.limitX:
             neightboors.append(img[self.y+1,self.x+1])
         else:
-            neightboors.append([255-self.color[0],255-self.color[1],255-self.color[2]])
+            neightboors.append([255-self.pixelColor[0],255-self.pixelColor[1],255-self.pixelColor[2]])
 
-        if self.y - 1 > self.limitY and self.x - 1 > self.limitX:
+        if self.y - 1 > 0 and self.x - 1 > 0:
             neightboors.append(img[self.y-1,self.x-1])
         else:
-            neightboors.append([255-self.color[0],255-self.color[1],255-self.color[2]])
+            neightboors.append([255-self.pixelColor[0],255-self.pixelColor[1],255-self.pixelColor[2]])
 
-        if self.y + 1 < self.limitY and self.x - 1 > self.limitX:
+        if self.y + 1 < self.limitY and self.x - 1 > 0:
             neightboors.append(img[self.y+1,self.x-1])
         else:
-            neightboors.append([255-self.color[0],255-self.color[1],255-self.color[2]])
+            neightboors.append([255-self.pixelColor[0],255-self.pixelColor[1],255-self.pixelColor[2]])
 
-        if self.y - 1 > self.limitY and self.x + 1 < self.limitX:
+        if self.y - 1 > 0 and self.x + 1 < self.limitX:
             neightboors.append(img[self.y-1,self.x+1])
         else:
-            neightboors.append([255-self.color[0],255-self.color[1],255-self.color[2]])
+            neightboors.append([255-self.pixelColor[0],255-self.pixelColor[1],255-self.pixelColor[2]])
 
         return neightboors[number]
 

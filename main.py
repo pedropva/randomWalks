@@ -7,7 +7,7 @@ import Walker
 '''['EVENT_FLAG_ALTKEY', 'EVENT_FLAG_CTRLKEY', 'EVENT_FLAG_LBUTTON', 'EVENT_FLAG_MBUTTON', 'EVENT_FLAG_RBUTTON', 'EVENT_FLAG_SHIFTKEY', 'EVENT_LBUTTONDBLCLK', 'EVENT_LBUTTONDOWN', 'EVENT_LBUTTONUP', 'EVENT_MBUTTONDBLCLK', 'EVENT_MBUTTONDOWN', 'EVENT_MBUTTONUP', 'EVENT_MOUSEHWHEEL', 'EVENT_MOUSEMOVE', 'EVENT_MOUSEWHEEL', 'EVENT_RBUTTONDBLCLK', 'EVENT_RBUTTONDOWN', 'EVENT_RBUTTONUP']
 '''
 #image we're walking on
-filename = 'reee.jpg'
+filename = '2.jpg'
 img = cv2.imread(filename,1)
 name, extension = os.path.splitext(filename)
 
@@ -20,10 +20,11 @@ def create_walker(event,x,y,flags,param):
 
     if event == cv2.EVENT_LBUTTONDOWN :
         drawing = True
-        walkers.append(Walker.Walker(x,y,[255,0,0],img.shape[0],img.shape[1]))
+        #walkers.append(Walker.Walker(x,y,[255,0,0],img.shape[0],img.shape[1]))
+        walkers.append(Walker.Walker(x,y,[255,0,0],img[y][x],img.shape[0],img.shape[1]))
     if event == cv2.EVENT_MOUSEMOVE:
         if drawing == True:
-            walkers.append(Walker.Walker(x,y,[255,0,0],img.shape[0],img.shape[1]))
+            walkers.append(Walker.Walker(x,y,[255,0,0],img[y][x],img.shape[0],img.shape[1]))
     if event == cv2.EVENT_LBUTTONUP:
         drawing = False
 
